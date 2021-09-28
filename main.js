@@ -1,4 +1,3 @@
-const { json } = require('stream/consumers');
 require('dotenv').config()
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const options = {
@@ -33,6 +32,9 @@ var fetchFriends = async function (screenName) {
 
     const params = new URLSearchParams();
     params.append('screen_name', screenName);
+    params.append('count', 200);
+    // bug - not interating over the full list of a friend's friends. Only interating over 200. Need to use api cursor to get back more
+    
     return await fetch("https://api.twitter.com/1.1/friends/list.json?" + params, options)
         .then(response => {
             return response.text()
@@ -44,15 +46,15 @@ var fetchFriends = async function (screenName) {
         .catch(error => console.error(error))
 }
 
-function sleep(time) {
+function sleep(ms) {
     return new Promise((resolve) => {
-        setTimeout(resolve, time || 1000);
+        setTimeout(resolve, ms || 1000);
     });
 }
 
 var findOccurrences = function (arr) {
     return Object.entries(arr.reduce(function (acc, curr) { return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc }, {}))
-        .filter(entry => entry[1] > 1)
+        .filter(entry => entry[1] > 3)
 }
 
 main();
