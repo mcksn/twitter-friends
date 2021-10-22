@@ -1,6 +1,6 @@
 # twitter-friends
 
-Small script to count up the mutual friends of your friends. ("friends" = twitter term for someone you are following)
+Finding the accounts loads of your friends are following. ("friends" = twitter term for someone you are following)
 
 From there you now have a list of new candidates to follow.
 
